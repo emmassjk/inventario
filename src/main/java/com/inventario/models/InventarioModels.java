@@ -1,4 +1,4 @@
-package main.java.com.inventario.models;
+package com.inventario.models;
 
 import lombok.*;
 import jakarta.persistence.*;

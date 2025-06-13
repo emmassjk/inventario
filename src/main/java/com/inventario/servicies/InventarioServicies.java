@@ -7,16 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.inventario.dto.InventarioDTO;
-import com.inventario.model.Inventario;
-import com.inventario.repository.InventarioRepository;
+import com.inventario.models.InventarioModels;
+import com.inventario.repositories.InventarioRepositories;
+
 
 @Service
 public class InventarioServicies {
 
     @Autowired
-    private InventarioRepository inventarioRepository;
+    private InventarioRepositories inventarioRepository;
 
-    private InventarioDTO toDTO(Inventario inventario) {
+    private InventarioDTO toDTO(InventarioModels inventario) {
         return new InventarioDTO(
             inventario.getId(),
             inventario.getIdProducto(),
@@ -25,8 +26,8 @@ public class InventarioServicies {
         );
     }
 
-    private Inventario toEntity(InventarioDTO dto) {
-        Inventario inventario = new Inventario();
+    private InventarioModels toEntity(InventarioDTO dto) {
+        InventarioModels inventario = new InventarioModels();
         inventario.setId(dto.getId());
         inventario.setIdProducto(dto.getIdProducto());
         inventario.setStockDisponible(dto.getStockDisponible());
@@ -35,7 +36,7 @@ public class InventarioServicies {
     }
 
     public InventarioDTO crear(InventarioDTO dto) {
-        Inventario inventario = toEntity(dto);
+        InventarioModels inventario = toEntity(dto);
         return toDTO(inventarioRepository.save(inventario));
     }
 
@@ -46,14 +47,14 @@ public class InventarioServicies {
     }
 
     public InventarioDTO obtenerPorId(Integer id) {
-        Inventario inventario = inventarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Inventario no encontrado"));
+        InventarioModels inventario = inventarioRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Inventario no encontrado"));
         return toDTO(inventario);
     }
 
     public InventarioDTO actualizar(Integer id, InventarioDTO dto) {
-        Inventario existente = inventarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Inventario no encontrado"));
+        InventarioModels existente = inventarioRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Inventario no encontrado"));
 
         existente.setIdProducto(dto.getIdProducto());
         existente.setStockDisponible(dto.getStockDisponible());

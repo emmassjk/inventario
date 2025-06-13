@@ -1,4 +1,4 @@
-package main.java.com.inventario.dto;
+package com.inventario.dto;
 
 import lombok.*;
 
